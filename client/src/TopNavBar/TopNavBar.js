@@ -29,10 +29,10 @@ class TopNavBar extends Component {
     return (
       <div className="Top-Nav-Bar">
         <Navbar bg="dark" variant="dark">
-          <Navbar.Brand  as={NavLink} to='/'  >Mern App</Navbar.Brand>
+          <Navbar.Brand  as={NavLink} to='/home'  >Mern App</Navbar.Brand>
           <Nav className="mr-auto">
-            <Nav.Link  as={NavLink} to='/home' >Banner</Nav.Link>
-            <Nav.Link  as={NavLink} to='/link-1' >Link-1</Nav.Link>
+            <Nav.Link  as={NavLink} to='/' >Dashboard</Nav.Link>
+            <Nav.Link  as={NavLink} to='/link-1' >Post New</Nav.Link>
             <Nav.Link  as={NavLink} to='/link-2' >Link-2</Nav.Link>
             <Nav.Link  as={NavLink} to='/link-3' >Link-3</Nav.Link>
             <Nav.Link  as={NavLink} to='/link-4' >Link-4</Nav.Link>

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import {Col,Form,Button,InputGroup,Container,Alert } from 'react-bootstrap';
 import axios from 'axios';
+import Dialog from 'react-bootstrap-dialog'
+//import { Redirect } from 'react-router';
+
 
 class Link1 extends Component {
 
@@ -16,7 +19,7 @@ class Link1 extends Component {
         state: '',
         zip: ''
       };
-
+      this.state ={ getResponse : ''};
     }
 
     handleChange = (e) => {
@@ -35,17 +38,22 @@ class Link1 extends Component {
         event.preventDefault();
         console.clear();
         const { firstname, lastname, username,city,state,zip } = this.state;
-        console.log(firstname);
-        console.log(lastname);
-        console.log(username);
-        console.log(city);
-        console.log(state);
-        console.log(zip);
-        const helloFromApi = axios
-                             .get('/users')
-                             .then(res => res.data);
-        console.log(helloFromApi);                     
-
+        
+          axios.post('/users/insert', {
+          "firstname": firstname, 
+          "lastname": lastname,
+          "username": username, 
+          "city": city, 
+          "state": state,
+          "zip": zip
+          })
+          .then(function (response) {
+            alert('Data Saved!');
+          })
+          .catch(function (error) {
+            alert('Error!')
+          });
+ 
       }
 
     }
@@ -54,11 +62,14 @@ class Link1 extends Component {
     return (
       <div className="Link-1">
 
+        <Dialog ref={(component) => { this.dialog = component }} />
+ 
       <Container>
         <br/>
         <Alert variant="warning">
           <Alert.Heading>Post Your Data here-(Post To Mongo)</Alert.Heading>
         </Alert>
+
 
       <Form
         noValidate
@@ -72,7 +83,7 @@ class Link1 extends Component {
               required
               type="text"
               placeholder="First name"
-              defaultValue="" name="firstname" 
+              defaultValue="" name="firstname" value={this.state.firstname}
               onChange={this.handleChange}
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -84,7 +95,7 @@ class Link1 extends Component {
               type="text"
               placeholder="Last name"
               defaultValue=""
-              name="lastname" 
+              name="lastname"   value={this.state.lastname}
               onChange={this.handleChange}
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -100,7 +111,7 @@ class Link1 extends Component {
                 placeholder="Username"
                 aria-describedby="inputGroupPrepend"
                 required
-                name="username" 
+                name="username"  value={this.state.username}
                 onChange={this.handleChange}
               />
               <Form.Control.Feedback type="invalid">
@@ -113,7 +124,7 @@ class Link1 extends Component {
           <Form.Group as={Col} md="6" controlId="validationCustom03">
             <Form.Label>City</Form.Label>
             <Form.Control type="text" placeholder="City" required 
-             name="city"
+             name="city"  value={this.state.city}
              onChange={this.handleChange} 
             />
             <Form.Control.Feedback type="invalid">
@@ -122,7 +133,8 @@ class Link1 extends Component {
           </Form.Group>
           <Form.Group as={Col} md="3" controlId="validationCustom04">
             <Form.Label>State</Form.Label>
-            <Form.Control type="text" placeholder="State" required name="state" 
+            <Form.Control type="text" placeholder="State" required 
+            name="state"  value={this.state.state} 
             onChange={this.handleChange}
             />
             <Form.Control.Feedback type="invalid">
@@ -131,7 +143,8 @@ class Link1 extends Component {
           </Form.Group>
           <Form.Group as={Col} md="3" controlId="validationCustom05">
             <Form.Label>Zip</Form.Label>
-            <Form.Control type="text" placeholder="Zip" required name="zip" 
+            <Form.Control type="text" placeholder="Zip" required 
+            name="zip"  value={this.state.zip} 
             onChange={this.handleChange}/>
             <Form.Control.Feedback type="invalid">
               Please provide a valid zip.
