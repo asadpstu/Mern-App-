@@ -13,7 +13,8 @@ router.get('/all-Post', function(req, res, next) {
   MongoClient.connect(database, function(err, db) {
     if (err) throw err;
     var dbo = db.db("mernapp");
-    dbo.collection("post").find({}).toArray(function(err, result) {
+    var sort = { date: -1 };
+    dbo.collection("post").find({}).limit(5).sort(sort).skip(0).toArray(function(err, result) {
       if (err) throw err;
       res.json(result);
       db.close();
@@ -38,7 +39,8 @@ router.post('/insert',function(req,res){
     "username": username, 
     "city": city, 
     "state": state,
-    "zip": zip 
+    "zip": zip,
+    "date": new Date(Date.now()).toISOString() 
   }; 
 
   MongoClient.connect(database, function(err, db) {

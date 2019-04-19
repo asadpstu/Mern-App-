@@ -31,26 +31,10 @@ class Dashboard extends Component {
              
      }
 
-
+    
 
     componentDidMount() {
-        axios.get('/users/all-Post')
-        .then(response => 
-            {
-                if (response.status === 200 && response != null) 
-                {
-                this.setState({
-                    data: response.data
-                });
-                } 
-                else 
-                {
-                console.log('problem');
-                }
-    })
-    .catch(error => {
-        console.log(error);
-    });
+        this.recall();
     }
 
     edit = object => event => {
@@ -74,28 +58,7 @@ class Dashboard extends Component {
         //console.log(this.state);
       } 
 
-
-      
-    handleSubmit = (e) => {
-       e.preventDefault();
-       const {_id, firstname, lastname, username,city,state,zip } = this.state;
-       axios.post('/users/update', {
-        "_id": _id, 
-        "firstname": firstname, 
-        "lastname": lastname,
-        "username": username, 
-        "city": city, 
-        "state": state,
-        "zip": zip
-        })
-        .then(function (response) {
-            alert("Data Updataed");               
-        })
-        .catch(function (error) {
-          alert(error)
-        });
-        this.setState({ lgShow: false }); 
-        // For rendering updated data
+    recall = (e) =>{
         axios.get('/users/all-Post')
             .then(response => 
                 {
@@ -112,8 +75,32 @@ class Dashboard extends Component {
         })
         .catch(error => {
             console.log(error);
-        });   
-
+        });
+    } 
+      
+    handleSubmit = (e) => {
+       e.preventDefault();
+       
+       const {_id, firstname, lastname, username,city,state,zip } = this.state;
+       axios.post('/users/update', {
+        "_id": _id, 
+        "firstname": firstname, 
+        "lastname": lastname,
+        "username": username, 
+        "city": city, 
+        "state": state,
+        "zip": zip
+        })
+        .then(function (response) {
+            // Data Inserted  
+            this.setState({ lgShow: false });  
+            this.recall();       
+        }.bind(this))
+        .catch(function (error) {
+          alert(error)
+        });
+        
+       
     }  
 
   render() {
