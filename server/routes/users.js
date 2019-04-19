@@ -1,5 +1,7 @@
 var express = require('express');
+
 var MongoClient = require('mongodb').MongoClient;
+
 const database = "mongodb://root:12345@cluster0-shard-00-00-ecaim.mongodb.net:27017,cluster0-shard-00-01-ecaim.mongodb.net:27017,cluster0-shard-00-02-ecaim.mongodb.net:27017/Laravel-vue-song?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true";
 
 
@@ -52,6 +54,37 @@ router.post('/insert',function(req,res){
     });    
   });
   
+});
+
+
+
+router.post('/update',function(req,res){
+  var id = req.body._id;
+  var username = req.body.username;
+  var firstname = req.body.firstname;
+  var lastname = req.body.lastname;
+  var city = req.body.city;
+  var state = req.body.state;
+  var zip = req.body.zip;
+  
+
+
+
+  MongoClient.connect(database, function(err, db) {
+
+    if (err) throw err;
+    var dbo = db.db("mernapp");
+    var myquery = { "username": username };
+    var newvalues = { $set: {"firstname" : firstname, "lastname": lastname, "city":city, "state":state, "zip":zip } };
+    dbo.collection("post").updateOne(myquery, newvalues, function(err, res) {
+    if (err) throw err;
+    db.close();
+    });
+    
+  });
+  res.json(req.body);
+
+ 
 });
 
 module.exports = router;
