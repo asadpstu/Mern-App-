@@ -7,12 +7,6 @@ import Signin from './TopNavBar/signin/signin';
 import Dashboard from './Dashboard/Dashboard';
 import { Route, BrowserRouter } from 'react-router-dom';
 
-
-
-
-
-
-
 class App extends Component {
 
 

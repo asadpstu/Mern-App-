@@ -4,6 +4,13 @@ import axios from 'axios';
 import Dialog from 'react-bootstrap-dialog'
 //import { Redirect } from 'react-router';
 
+//For image
+import { FilePond,registerPlugin } from 'react-filepond';
+import 'filepond/dist/filepond.min.css';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+registerPlugin(FilePondPluginImagePreview);
+
 
 class Link1 extends Component {
 
@@ -24,6 +31,7 @@ class Link1 extends Component {
 
     handleChange = (e) => {
       this.setState({ [e.target.name]: e.target.value });
+      console.log(this.state);
     }
 
     handleSubmit = (event) => {
@@ -63,7 +71,7 @@ class Link1 extends Component {
         <Container>
         <br/>
         <Alert variant="warning">
-          <Alert.Heading>Post Your Data here-(Post To Mongo)</Alert.Heading>
+          <Alert.Heading>Add new Record - (MongoDb)</Alert.Heading>
         </Alert>
 
 
@@ -154,8 +162,14 @@ class Link1 extends Component {
             feedback="You must agree before submitting."
           />
         </Form.Group>
+        
         <Button type="submit">Submit form</Button>
       </Form>
+
+       <hr/>
+       <div><h4>Upload new profile picture Using File Pond</h4></div>
+       <FilePond  allowMultiple={true}  name={"file"}  server="/upload" />
+       
       </Container>
       );
     return (
