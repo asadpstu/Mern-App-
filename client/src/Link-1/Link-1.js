@@ -59,12 +59,8 @@ class Link1 extends Component {
     }
     render() {
       const { validated } = this.state;
-    return (
-      <div className="Link-1">
-
-        <Dialog ref={(component) => { this.dialog = component }} />
- 
-      <Container>
+      const content = (
+        <Container>
         <br/>
         <Alert variant="warning">
           <Alert.Heading>Post Your Data here-(Post To Mongo)</Alert.Heading>
@@ -161,6 +157,17 @@ class Link1 extends Component {
         <Button type="submit">Submit form</Button>
       </Form>
       </Container>
+      );
+    return (
+      <div className="Link-1">
+      
+      
+      <Dialog ref={(component) => { this.dialog = component }} />
+
+      { localStorage.hastoken ? content : '' }
+ 
+
+      
 
 
       </div>

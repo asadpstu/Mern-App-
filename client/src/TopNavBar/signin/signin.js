@@ -1,54 +1,93 @@
 import React, { Component } from 'react';
-import { Form,Button,Modal } from 'react-bootstrap';
+import { Form,Button,Container,Col,Row } from "react-bootstrap";
+import axios from 'axios';
 
 
 
 class Signin extends Component {
-  constructor(props, context) {
-    super(props, context);
-
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-
+  constructor(...args) {
+    super(...args);
     this.state = {
-      show: false,
+      email: '',
+      password: '',
+
     };
+    
   }
 
-  handleClose() {
-    this.setState({ show: false });
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+    console.log(this.state);
   }
 
-  handleShow() {
-    this.setState({ show: true });
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const { email,password } = this.state;
+
+    if (password) 
+    { 
+        axios.post('/user/login/registration/login', {
+        "email": email, 
+        "password": password, 
+        })
+        .then(function (response) {
+          if(response.data.result === "FALSE"){
+            alert('Please try with other information')
+          }
+          else
+          {
+           //alert('Login successfull!');
+           localStorage.setItem('hastoken',response.data.result);  
+           this.props.history.push('/dashboard');          
+          }
+
+        }.bind(this))
+        .catch(function (error) {
+          alert('Unexpected Error -'+error);
+        });
+    }
+    else
+    {
+      alert('Please provide all info!')
+    }
+
   }
 
   render() {
     return (
-      <div className="signin">
-        <Button variant="outline-info" className="mr-sm-2" onClick={this.handleShow}>Signin</Button>
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Login here -</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
+      <div className="form-group">
+      <Container>
+      <Row>
+        <Col></Col>
+        <Col xs={6}>
+            <Form onSubmit={this.handleSubmit}>
+              <br/>
+              <h2>Login Form</h2>
+              
 
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control name="email" type="email" placeholder="Enter email" onChange={this.handleChange}/>
+                <Form.Text className="text-muted">
+                  Provide email that you used for registration 
+                </Form.Text>
+              </Form.Group>
 
-          <Form.Control type="text" placeholder="Email" required /><br/>
-          <Form.Control type="text" placeholder="Password" required />
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control name="password" type="password" placeholder="Password" onChange={this.handleChange}/>
+              </Form.Group>
 
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </Form>                
+        </Col>
+        <Col></Col>
+      </Row>
 
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={this.handleClose}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
+        </Container>
+    </div>
     );
   }
 }

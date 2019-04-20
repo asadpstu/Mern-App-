@@ -1,56 +1,76 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom'
-import { Navbar,Nav,Form,FormControl} from 'react-bootstrap';
-import Signin from './signin/signin';
-import Signup from './signup/signup';
+import { NavLink,withRouter } from 'react-router-dom';
+/* [withRouter] is related to changing content of navbar with local storage value */ 
+import { Navbar,Nav,Form} from 'react-bootstrap';
+
 
 
 class TopNavBar extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-
     this.state = {
       show: false,
     };
+
   }
 
-  handleClose() {
-    this.setState({ show: false });
+  logout =(e) =>{
+    localStorage.removeItem('hastoken');
+    this.props.history.push('/');  
   }
+  
 
-  handleShow() {
-    this.setState({ show: true });
-  }
+
 
   render() {
+    
+    const notlogin =(
+      <Form inline>
+      <Nav.Link  as={NavLink} to='/signup' >Sign-up</Nav.Link>
+      <Nav.Link  as={NavLink} to='/signin' >Sign-in</Nav.Link>  
+      </Form>
+    )
+
+    const alreadylogin =(
+      <Form inline>
+      <Nav.Link  as={NavLink} to='/' >Profile</Nav.Link>
+      <Nav.Link  as={NavLink} onClick={this.logout} >Logout</Nav.Link>  
+      </Form>
+    )
+
+
     return (
       <div className="Top-Nav-Bar">
         <Navbar bg="dark" variant="dark">
-          <Navbar.Brand  as={NavLink} to='/home'  >Mern App</Navbar.Brand>
+          <Navbar.Brand  as={NavLink} to='/'  >Mern App</Navbar.Brand>
           <Nav className="mr-auto">
-            <Nav.Link  as={NavLink} to='/' >Dashboard</Nav.Link>
-            <Nav.Link  as={NavLink} to='/link-1' >Post New</Nav.Link>
-            <Nav.Link  as={NavLink} to='/link-2' >Link-2</Nav.Link>
-            <Nav.Link  as={NavLink} to='/link-3' >Link-3</Nav.Link>
+          { localStorage.hastoken ? 
+            <Nav.Link  as={NavLink} to='/dashboard' >Dashboard</Nav.Link> 
+            : 
+            '' 
+          }
+          { localStorage.hastoken ? 
+            <Nav.Link  as={NavLink} to='/add-record' >Add Record</Nav.Link> 
+            : 
+            '' 
+          }
+            
+            
+            <Nav.Link  as={NavLink} to='/link-2' >Image work</Nav.Link>
+            <Nav.Link  as={NavLink} to='/link-3' >News-letter</Nav.Link>
             <Nav.Link  as={NavLink} to='/link-4' >Link-4</Nav.Link>
             <Nav.Link  as={NavLink} to='/link-5' >Link-5</Nav.Link>
           </Nav>
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Signup />
-            <Signin />
-            
-          </Form>
+          
+          
+          { localStorage.hastoken ? alreadylogin : notlogin }
+          
+          
         </Navbar>
-
-        <signup />
-        <signin />
       </div>
     );
   }
 }
 
-export default TopNavBar;
+export default withRouter(TopNavBar);

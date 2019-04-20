@@ -3,7 +3,8 @@ import Media from 'react-bootstrap/Media';
 import title from './title.jpg';
 import axios from 'axios';
 import {Container,Form,Button} from 'react-bootstrap';
-import Modal from 'react-bootstrap/Modal'
+import Modal from 'react-bootstrap/Modal';
+import {withRouter } from 'react-router-dom';
 
 //import ReactDOM from 'react-dom';
 
@@ -32,9 +33,13 @@ class Dashboard extends Component {
      }
 
     
-
+    
     componentDidMount() {
-        this.recall();
+        if(localStorage.hastoken)
+        {
+         this.recall();   
+        }
+        
     }
 
     edit = object => event => {
@@ -192,4 +197,4 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export default withRouter(Dashboard);
