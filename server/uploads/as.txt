@@ -1,0 +1,4 @@
+Executed SQL Statement : Alter table `fabrick`.`Trigger`   
+  change `ComparisonType` `ComparisonType` enum('Above','Below','Equal','EqualOrAbove','EqualOrBelow','Range','MoreThan','LessThan') CHARSET utf8 COLLATE utf8_general_ci NULL 
+Error Number : 1265 
+Error Message: Data truncated for column 'ComparisonType' at row 35 

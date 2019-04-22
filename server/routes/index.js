@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload')
+const fs = require('fs');
+var dir = require('node-dir');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -34,5 +36,24 @@ router.post('/upload', (req, res, next) => {
     }
   )
 })
+
+router.get('/upload', (req, res, next) => {
+  fs.readdir('./uploads', function (err, files) {
+    if(err)
+    {
+      console.log(err);
+    }
+    else
+    {
+      var total = files.length;
+      var location = "localhost:3000/uploads/"
+      res.json({"total" : total,"location" : location,"imagelist" : files});
+    }
+
+});
+
+})
+
+
 
 module.exports = router;

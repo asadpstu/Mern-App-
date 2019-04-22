@@ -70,8 +70,8 @@ class Link1 extends Component {
       const content = (
         <Container>
         <br/>
-        <Alert variant="warning">
-          <Alert.Heading>Add new Record - (MongoDb)</Alert.Heading>
+        <Alert variant="success">
+          Add new Record - (MongoDb)
         </Alert>
 
 
@@ -167,7 +167,10 @@ class Link1 extends Component {
       </Form>
 
        <hr/>
-       <div><h4>Upload new profile picture Using File Pond</h4></div>
+       <Alert variant="success">
+       Upload image for image gallery Using File Pond
+       </Alert>
+       
        <FilePond  allowMultiple={true}  name={"file"}  server="/upload" />
        
       </Container>
