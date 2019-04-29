@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Col,Form,Button,InputGroup,Container,Alert } from 'react-bootstrap';
+import {Col,Form,InputGroup,Container } from 'react-bootstrap';
 import axios from 'axios';
 import Dialog from 'react-bootstrap-dialog'
 //import { Redirect } from 'react-router';
@@ -70,10 +70,10 @@ class Link1 extends Component {
       const content = (
         <Container>
         <br/>
-        <Alert variant="success">
+        <strong >
           Add new Record - (MongoDb)
-        </Alert>
-
+        </strong>
+        <hr/>
 
       <Form
         noValidate
@@ -81,7 +81,7 @@ class Link1 extends Component {
         onSubmit={this.handleSubmit}
       >
         <Form.Row>
-          <Form.Group as={Col} md="4" controlId="validationCustom01">
+          <Form.Group as={Col} md="3" controlId="validationCustom01">
             <Form.Label>First name</Form.Label>
             <Form.Control
               required
@@ -92,7 +92,7 @@ class Link1 extends Component {
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           </Form.Group>
-          <Form.Group as={Col} md="4" controlId="validationCustom02">
+          <Form.Group as={Col} md="3" controlId="validationCustom02">
             <Form.Label>Last name</Form.Label>
             <Form.Control
               required
@@ -104,7 +104,9 @@ class Link1 extends Component {
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           </Form.Group>
-          <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+        </Form.Row>
+        <Form.Row>
+        <Form.Group as={Col} md="6" controlId="validationCustomUsername">
             <Form.Label>Username</Form.Label>
             <InputGroup>
               <InputGroup.Prepend>
@@ -135,7 +137,9 @@ class Link1 extends Component {
               Please provide a valid city.
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group as={Col} md="3" controlId="validationCustom04">
+        </Form.Row>
+        <Form.Row>
+        <Form.Group as={Col} md="3" controlId="validationCustom04">
             <Form.Label>State</Form.Label>
             <Form.Control type="text" placeholder="State" required 
             name="state"  value={this.state.state} 
@@ -155,21 +159,30 @@ class Link1 extends Component {
             </Form.Control.Feedback>
           </Form.Group>
         </Form.Row>
-        <Form.Group>
-          <Form.Check
-            required
-            label="Agree to terms and conditions"
-            feedback="You must agree before submitting."
-          />
-        </Form.Group>
-        
-        <Button type="submit">Submit form</Button>
+        <Form.Row>
+          <Form.Group>
+            <Form.Check
+              required
+              label="Agree to terms and conditions"
+              feedback="You must agree before submitting."
+            />
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group as={Col} md="4">
+          </Form.Group>
+          <Form.Group as={Col} md="2">
+          <button type="submit" class="btn btn-success float-right">Submit Data</button>
+          </Form.Group>
+        </Form.Row>
+
       </Form>
 
+
+       <strong>
+       Upload image for image gallery Using File Pond (No purpose - Just for functional testing)
+       </strong>
        <hr/>
-       <Alert variant="success">
-       Upload image for image gallery Using File Pond
-       </Alert>
        
        <FilePond  allowMultiple={true}  name={"file"}  server="/upload" />
        

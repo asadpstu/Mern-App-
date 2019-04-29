@@ -7,6 +7,7 @@ import Issue from './Issues/Issue';
 import Signup from './TopNavBar/signup/signup';
 import Signin from './TopNavBar/signin/signin';
 import Dashboard from './Dashboard/Dashboard';
+import AllVisitor from './All-Visitor/AllVisitor';
 import { Route, BrowserRouter } from 'react-router-dom';
 
 class App extends Component {
@@ -23,6 +24,8 @@ class App extends Component {
           <Route  exact path='/Issue' component={Issue} />            
           <Route  exact path='/signup' component={Signup} />
           <Route  exact path='/signin' component={Signin} />
+          <Route  exact path='/All-Visitor' component={AllVisitor} />
+          
         </BrowserRouter>
       </div>
     );

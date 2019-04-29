@@ -54,6 +54,14 @@ router.get('/upload', (req, res, next) => {
 
 })
 
+router.get('/location', function(req, res, next) {
+  let locationdata = fs.readFileSync('location.json');  
+  let location = JSON.parse(locationdata);
+  res.json({
+    location
+  });
+});
+
 
 
 module.exports = router;

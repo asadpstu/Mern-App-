@@ -66,3 +66,14 @@ code {
 .form-light .footer {
   border-bottom-left-radius: .3rem;
   border-bottom-right-radius: .3rem; }
+
+.map {
+  height: 600px;
+}  
+
+.leaflet-div-icon {
+  background: transparent;
+  border: none;
+}  
+
+  

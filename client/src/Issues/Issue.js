@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container,Row,Col,Card,Form,ButtonToolbar,Button,ListGroup } from 'react-bootstrap';
-
+import loading from '../Image/loading.gif';
 import axios from 'axios';
 
 
@@ -55,7 +55,7 @@ class Issue extends Component {
     })
     .then(function(response){
        console.log(response); 
-       alert("Issue submitted for acceptance!");
+       //alert("Issue submitted for acceptance!");
        this.setState({
             title: "",
             issueDesc : ""
@@ -145,7 +145,7 @@ class Issue extends Component {
         <Card.Body>                          
         <Card.Title>Loading</Card.Title>                                       
           <Card.Text>
-          Please wait a while ....                              
+          Please wait a while <img src={loading} width="40" height="40" alt=""/>                              
           </Card.Text>                          
         </Card.Body>
 

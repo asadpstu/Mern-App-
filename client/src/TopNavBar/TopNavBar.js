@@ -58,7 +58,7 @@ class TopNavBar extends Component {
             
             
             <Nav.Link  as={NavLink} to='/Issue' >Post Issue</Nav.Link>
-            <Nav.Link  as={NavLink} to='/link-3' >News-letter</Nav.Link>
+            <Nav.Link  as={NavLink} to='/All-Visitor' >All-Visitor</Nav.Link>
 
           </Nav>
           
