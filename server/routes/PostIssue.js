@@ -9,10 +9,12 @@ router.post('/add/issue',function(req,res){
     console.log("Post Issue");
     var title = req.body.title;
     var issueDesc = req.body.issueDesc;
+    var IssueInDetail = req.body.IssueInDetail;
 
     var myobj = { 
       "title": title, 
       "issue": issueDesc,
+      "IssueInDetail": IssueInDetail,
       "date": new Date(Date.now()).toISOString() 
     }; 
   

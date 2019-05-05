@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Container,Row,Col,Card,Form,ButtonToolbar,Button,ListGroup } from 'react-bootstrap';
 import loading from '../Image/loading.gif';
 import axios from 'axios';
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 
@@ -19,7 +21,8 @@ class Issue extends Component {
     
     this.state =  {
       title : '',
-      issueDesc : ''
+      issueDesc : '',
+      richtext:''
     }
 
     this.state = {
@@ -30,7 +33,9 @@ class Issue extends Component {
       issue:[]
     }
     
-    this.handleChange = this.handleChange.bind( this );
+    this.handleChangeTitle = this.handleChangeTitle.bind( this );
+    this.handleChangeIssue = this.handleChangeIssue.bind( this );
+    this.richtext = this.richtext.bind( this );
     this.handleSubmit = this.handleSubmit.bind( this );
   }
 
@@ -39,26 +44,40 @@ class Issue extends Component {
   }
   
   // all task for Posting data
-  handleChange =(event) =>{
+  handleChangeTitle =(event) =>{
     this.setState({
-      [event.target.name] : event.target.value
+      title : event.target.value
     });    
+  }
+  handleChangeIssue =(event) =>{
+    this.setState({
+      issueDesc : event.target.value
+    });    
+  }
+
+  richtext = (data) =>{
+    this.setState({
+      richtext : data
+    });
+    console.log(this.state); 
   }
 
   handleSubmit =(event) =>{
     event.preventDefault();
-    const {title,issueDesc} =this.state;
+    const {title,issueDesc,richtext} =this.state;
     axios.post('/issue/add/issue',
     {
       "title" : title,
-      "issueDesc": issueDesc
+      "issueDesc": issueDesc,
+      "IssueInDetail":richtext
     })
     .then(function(response){
        console.log(response); 
        //alert("Issue submitted for acceptance!");
        this.setState({
             title: "",
-            issueDesc : ""
+            issueDesc : "",
+            richtext:""
         });
         this.getLastTenIssue();
     }.bind(this))
@@ -133,7 +152,10 @@ class Issue extends Component {
         <Card.Title>{SelctedObject.title}</Card.Title>                                       
           <Card.Text>
           {SelctedObject.issue}                               
-          </Card.Text>                          
+          </Card.Text>  
+          <Card.Text dangerouslySetInnerHTML={{__html: SelctedObject.IssueInDetail}}>                             
+          </Card.Text>  
+                                  
         </Card.Body>
         ))}  
       </Card>
@@ -176,11 +198,25 @@ class Issue extends Component {
                                   <Form onSubmit={this.handleSubmit} > 
                                     <Form.Label><b>Add New Post Anonymously -</b> </Form.Label> 
                                     <Form.Group controlId="exampleForm.ControlText1">
-                                        <Form.Control type="text" id="title" name="title" placeholder="Issue title" onChange={this.handleChange} value={this.state.title}/>
+                                        <Form.Control type="text" id="title" name="title" placeholder="Issue title" onChange={this.handleChangeTitle} value={this.state.title}/>
                                     </Form.Group>  
                                     <Form.Group controlId="exampleForm.ControlTextarea1">
-                                        <Form.Control as="textarea" name="issueDesc" rows="3" placeholder="Write here your Issue anonymously" onChange={this.handleChange} value={this.state.issueDesc}/>
+                                        <Form.Control as="textarea" name="issueDesc" rows="3" placeholder="Write here your Issue anonymously" onChange={this.handleChangeIssue} value={this.state.issueDesc}/>
                                     </Form.Group>  
+                                    <CKEditor name="richtext"
+                                        editor={ ClassicEditor }
+                                        data={this.state.richtext}
+                                        
+                                        onChange={ ( event, editor ) => {
+                                            const data = editor.getData();
+                                            console.log( { event, editor, data } );
+                                            this.richtext(data);
+                                            
+                                        } }
+                                        
+                                        
+                                    />
+                                    <br/>
                                     <ButtonToolbar>
                                         <Button type="submit" variant="primary" >Save and publish post</Button>
                                     </ButtonToolbar>  
